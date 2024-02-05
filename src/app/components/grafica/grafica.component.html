@@ -1,0 +1,68 @@
+<h1>Gráfica dinámica</h1>
+<hr>
+
+<div id="gastos">
+    <li *ngFor="let gasto of gastos">
+        <ul>{{gasto.mes}}: {{gasto.gasto}}<button id="botonEliminar" (click)="eliminarGasto()"><mat-icon id="matIcon">delete_forever</mat-icon></button></ul>
+    </li>
+</div>
+<div class="row grafica">
+    <div id="graficaDiv">
+        <div id="graficaDiv">
+            <canvas baseChart
+                    class="chart"
+                    [data]="lineChartData"
+                    [type]="'line'">
+            </canvas>
+        </div>
+    </div>
+</div>
+<form class="formulario" #form="ngForm" (ngSubmit)="enviarGasto(form)">
+    <div class="selector">
+        <select [(ngModel)]="opcionSeleccionada" #select="ngModel" name="select">
+            <option *ngFor="let opcion of opciones" [value]="opcion" >{{ opcion }}</option>
+        </select>
+        <span *ngIf="select.touched && this.opcionSeleccionada == 'Seleccione un mes'">Campo obligatorio</span>
+    </div>
+    <input type="text" name="texto" [(ngModel)]="texto" #texto required>
+    <div class="inputGasto">
+        <input type="number" placeholder="Introduzca el gasto" #gasto="ngModel" name="gasto" [(ngModel)]="valor" required><br>
+        <span *ngIf="gasto.touched && !gasto.valid">Campo numérico obligatorio</span>
+        <span *ngIf="gasto.touched && gasto.valid && valor == 0">Debe ser mayor que 0</span><br>
+    </div>
+    <div class="boton">
+        <input name="botonEnviar" id="botonEnviar" type="submit" [disabled]="opcionSeleccionada == 'Seleccione un mes' || valor == null || valor == 0 || !form.form.valid" (ngSubmit)="enviarGasto(form)">
+    </div> 
+</form>
+
+			
+<!-- <table>
+  <tr>
+    <th *ngFor="let label of lineChartData.labels">{{ label }}</th>
+  </tr>
+  <tr
+    *ngFor="let d of lineChartData.datasets; let i = index"
+    [class]="'line-' + i"
+  >
+    <td *ngFor="let label of lineChartData.labels; let j = index">
+      {{ d && d.data[j] }}
+    </td>
+  </tr>
+</table>
+<div class="button-row">
+  <button mat-button mat-raised-button color="primary" (click)="randomize()">
+    Randomize
+  </button>
+  <button mat-button mat-raised-button color="primary" (click)="pushOne()">
+    Push
+  </button>
+  <button mat-button mat-raised-button color="primary" (click)="changeColor()">
+    Recolor
+  </button>
+  <button mat-button mat-raised-button color="primary" (click)="hideOne()">
+    Toggle Series B
+  </button>
+  <button mat-button mat-raised-button color="primary" (click)="changeLabel()">
+    Change Label
+  </button>
+</div> -->
