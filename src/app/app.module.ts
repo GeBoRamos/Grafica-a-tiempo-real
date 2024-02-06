@@ -12,7 +12,7 @@ const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 import { NgChartsModule } from 'ng2-charts';
 import { GraficaComponent } from './components/grafica/grafica.component';
 import { FormsModule } from '@angular/forms';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+
 
 //Angular material
 import { MatIconModule } from '@angular/material/icon';
@@ -32,7 +32,6 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule
   ],
   providers: [
-    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

@@ -1,9 +1,13 @@
-<h1>Gráfica dinámica</h1>
+<h1>Gráfica de gastos mensuales</h1>
 <hr>
 
+<select name="select" id="selectorMes" [(ngModel)]="mesSeleccionado" #select="ngModel" (change)="seleccionarMes($event)">
+  <option *ngFor="let opcion of opciones" [value]="opcion">{{opcion}}</option>
+</select>
 <div id="gastos">
-    <li *ngFor="let gasto of gastos">
-        <ul>{{gasto.mes}}: {{gasto.gasto}}<button id="botonEliminar" (click)="eliminarGasto()"><mat-icon id="matIcon">delete_forever</mat-icon></button></ul>
+    <li *ngFor="let gasto of gastosAMostrar">
+        <ul><strong>{{gasto.mes}}: {{gasto.gasto}} euros</strong><button id="botonEliminar" (click)="eliminarGasto(gasto)"><mat-icon id="matIcon">delete_forever</mat-icon></button></ul>
+        <ul>{{gasto.descripcion}}</ul>
     </li>
 </div>
 <div class="row grafica">
@@ -24,14 +28,17 @@
         </select>
         <span *ngIf="select.touched && this.opcionSeleccionada == 'Seleccione un mes'">Campo obligatorio</span>
     </div>
-    <input type="text" name="texto" [(ngModel)]="texto" #texto required>
     <div class="inputGasto">
         <input type="number" placeholder="Introduzca el gasto" #gasto="ngModel" name="gasto" [(ngModel)]="valor" required><br>
         <span *ngIf="gasto.touched && !gasto.valid">Campo numérico obligatorio</span>
         <span *ngIf="gasto.touched && gasto.valid && valor == 0">Debe ser mayor que 0</span><br>
     </div>
+    <div class="inputDescripcion">
+      <input type="text" name="texto" [(ngModel)]="descripcionInput" #texto="ngModel" placeholder="Introduzca la descripción" required>
+      <span *ngIf="texto.touched && !texto.valid">Campo obligatorio</span>
+    </div>
     <div class="boton">
-        <input name="botonEnviar" id="botonEnviar" type="submit" [disabled]="opcionSeleccionada == 'Seleccione un mes' || valor == null || valor == 0 || !form.form.valid" (ngSubmit)="enviarGasto(form)">
+        <input name="botonEnviar" id="botonEnviar" type="submit" [disabled]="opcionSeleccionada == 'Seleccione un mes' || valor == 0 || !form.form.valid" (ngSubmit)="enviarGasto(form)">
     </div> 
 </form>
 
